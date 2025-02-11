@@ -2,35 +2,42 @@ import bcrypt from 'bcrypt';
 
 const users = [
   {
-    name: 'Admin User',
-    email: 'admin@admin.com',
-    password: bcrypt.hashSync('admin123', 10),
+    name: 'Vijay Kumar',
+    email: 'kumarbijaybehera07@gmail.com',
+    password: bcrypt.hashSync('Bijay@123', 10),
     isAdmin: true
   },
   {
-    name: 'John Doe',
-    email: 'john@email.com',
-    password: bcrypt.hashSync('john123', 10),
+    name: 'Sukumar Tripathy',
+    email: 'sukumar@email.com',
+    password: bcrypt.hashSync('Sukumar@123', 10),
     isAdmin: false
   },
   {
-    name: 'Alice Smith',
-    email: 'alice@email.com',
-    password: bcrypt.hashSync('alice123', 10),
+    name: 'Raja Naik',
+    email: 'raja@email.com',
+    password: bcrypt.hashSync('Raja@123', 10),
     isAdmin: false
   },
   {
-    name: 'Eva Brown',
-    email: 'eva@email.com',
-    password: bcrypt.hashSync('eva123', 10),
+    name: 'Shankar Pattnaik',
+    email: 'shankar@gmail.com',
+    password: bcrypt.hashSync('Shankar@123', 10),
     isAdmin: false
   },
   {
-    name: 'David Miller',
-    email: 'david@email.com',
-    password: bcrypt.hashSync('david123', 10),
+    name: 'Tanvir Pradhan',
+    email: 'tanvir@email.com',
+    password: bcrypt.hashSync('Tanvir@123', 10),
+    isAdmin: false
+  },
+  {
+    name: 'Amul Meher',
+    email: 'amul@email.com',
+    password: bcrypt.hashSync('Amulr@123', 10),
     isAdmin: false
   }
+
 ];
 
 export default users;

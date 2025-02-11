@@ -1,5 +1,4 @@
 import React from 'react';
-import { Row, Col, Card } from 'react-bootstrap';
 import { FaStore, FaUsers, FaShoppingBag, FaWallet } from 'react-icons/fa';
 
 import { useGetProductsQuery } from '../../slices/productsApiSlice';
@@ -10,9 +9,16 @@ import { addCurrency } from '../../utils/addCurrency';
 
 import Loader from '../../components/Loader';
 import Meta from '../../components/Meta';
-import ProductPriceChart from '../../components/Admin/ProductPriceChart';
-import OrderPriceChart from '../../components/Admin/OrderPriceChart';
-import DashboardCard from '../../components/Admin/DashboardCard';
+
+const DashboardCard = ({ title, icon, value, bgColor }) => {
+  return (
+    <div className={`p-6 rounded-lg shadow-lg text-white flex flex-col items-center justify-center ${bgColor}`}>
+      <div className="text-4xl">{icon}</div>
+      <h2 className="text-lg font-semibold mt-2">{title}</h2>
+      <p className="text-2xl font-bold">{value}</p>
+    </div>
+  );
+};
 
 const Dashboard = () => {
   const { data, isLoading } = useGetProductsQuery({});
@@ -21,57 +27,36 @@ const Dashboard = () => {
 
   return (
     <>
+      <Meta title="Admin Dashboard" />
       {isLoading || isUsersLoading || isOrdersLoading ? (
         <Loader />
       ) : (
-        <>
-          <Row>
-            <Meta title={'Admin Dashboard'} />
-            <Col md={6} lg={3} className='position-relative'>
-              <DashboardCard
-                title={'Products'}
-                icon={<FaStore size={40} />}
-                value={data?.total}
-                bgColor={'bg-info'}
-              />
-            </Col>
-            <Col md={6} lg={3} className='position-relative'>
-              <DashboardCard
-                title={'Users'}
-                icon={<FaUsers size={40} />}
-                value={users?.length}
-                bgColor={'bg-danger'}
-              />
-            </Col>
-            <Col md={6} lg={3} className='position-relative'>
-              <DashboardCard
-                title={'Orders'}
-                icon={<FaShoppingBag size={40} />}
-                value={orders?.length}
-                bgColor={'bg-warning'}
-              />
-            </Col>
-            <Col md={6} lg={3} className='position-relative'>
-              <DashboardCard
-                title={'Revenue'}
-                icon={<FaWallet size={40} />}
-                value={addCurrency(
-                  orders?.reduce((acc, item) => acc + item.totalPrice, 0)
-                )}
-                bgColor={'bg-success'}
-              />
-            </Col>
-          </Row>
-
-          <Row>
-            <Col md={12} lg={6}>
-              <ProductPriceChart products={data?.products} />
-            </Col>
-            <Col md={12} lg={6}>
-              <OrderPriceChart orders={orders} />
-            </Col>
-          </Row>
-        </>
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 p-6">
+          <DashboardCard
+            title="Products"
+            icon={<FaStore />}
+            value={data?.total}
+            bgColor="bg-blue-500"
+          />
+          <DashboardCard
+            title="Users"
+            icon={<FaUsers />}
+            value={users?.length}
+            bgColor="bg-red-500"
+          />
+          <DashboardCard
+            title="Orders"
+            icon={<FaShoppingBag />}
+            value={orders?.length}
+            bgColor="bg-yellow-500"
+          />
+          <DashboardCard
+            title="Revenue"
+            icon={<FaWallet />}
+            value={addCurrency(orders?.reduce((acc, item) => acc + item.totalPrice, 0))}
+            bgColor="bg-green-500"
+          />
+        </div>
       )}
     </>
   );

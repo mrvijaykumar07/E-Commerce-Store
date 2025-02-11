@@ -2,13 +2,12 @@ import React, { useEffect, useState } from 'react';
 
 import { Row, Col } from 'react-bootstrap';
 import { useGetProductsQuery } from '../slices/productsApiSlice';
-import { useSelector } from 'react-redux';
+
 
 import Product from '../components/Product';
 import Loader from '../components/Loader';
 import Message from '../components/Message';
 import Paginate from '../components/Paginate';
-import ProductCarousel from '../components/ProductCarousel';
 import ServerError from '../components/ServerError';
 import Meta from '../components/Meta';
 
@@ -18,12 +17,11 @@ const HomePage = () => {
   const [total, setTotal] = useState(0);
   const [limit, setLimit] = useState(0);
   const [skip, setSkip] = useState(0);
-  const { search } = useSelector(state => state.search);
+
 
   const { data, isLoading, error } = useGetProductsQuery({
     limit,
-    skip,
-    search
+    skip
   });
 
   useEffect(() => {
@@ -33,7 +31,7 @@ const HomePage = () => {
       setTotal(data.total);
       setTotalPage(Math.ceil(total / limit));
     }
-  }, [currentPage, data, limit, total, search]);
+  }, [currentPage, data, limit, total]);
 
   const pageHandler = pageNum => {
     if (pageNum >= 1 && pageNum <= totalPage && pageNum !== currentPage) {
@@ -51,9 +49,9 @@ const HomePage = () => {
         </Message>
       ) : (
         <>
-          {!search && <ProductCarousel />}
+          
           <Meta />
-          <h1>Latest Products</h1>
+          <h1>Products</h1>
           <Row>
             {data.products.map(product => (
               <Col key={product._id} sm={12} md={6} lg={4} xl={3}>
@@ -61,7 +59,7 @@ const HomePage = () => {
               </Col>
             ))}
           </Row>
-          {totalPage > 1 && !search && (
+          {totalPage > 1 && (
             <Paginate
               currentPage={currentPage}
               totalPage={totalPage}

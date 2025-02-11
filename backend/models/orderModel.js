@@ -23,6 +23,7 @@ const orderSchema = new mongoose.Schema(
         }
       }
     ],
+    
     // Shipping address details
     shippingAddress: {
       address: { type: String, required: true },
